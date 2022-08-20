@@ -5,8 +5,6 @@ from subject_selector import selector_params, find_subject_literature
 def classify_literature(new_price, converted_price=converted_price_template.copy()):
     for cls in new_price.keys():
         cls_price = new_price.get(cls)
-        # if cls in ["10", "11"]:
-        #     cls = "10-11"
         subjects = converted_price.get(cls).keys()
 
         for subject in subjects:
@@ -26,5 +24,3 @@ def show_converted_price(converted_price):
             print(len(converted_price[cls][subject]))
 
 
-# converted_price = classify_literature(new_price)
-# show_converted_price(converted_price)

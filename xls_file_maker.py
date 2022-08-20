@@ -1,11 +1,11 @@
 from openpyxl import load_workbook
 from openpyxl.styles import (
                         PatternFill, Border, Side,
-                        Alignment, Font, GradientFill
+                        Alignment, Font
                         )
 from openpyxl.workbook import Workbook
 from interservice_price_parser import parse_price
-from new_price_converter import classify_literature, show_converted_price
+from new_price_converter import classify_literature
 
 
 def get_data(file_name=None, price=None, sale=17):
@@ -115,7 +115,7 @@ def arrange_new_price(filename="test_us_price_1.xlsx"):
     arrange_row(9, "CEA7E5", align=True)
 
     for index in range(10, table_len+1):
-        if not page[f"C{index}"].value:
+        if not page[f"C{index}"].value and not page[f"D{index}"].value and not page[f"E{index}"].value:
             if "Класс" in page[f"B{index}"].value:
                 arrange_row(index, "00FFFF00", bold=True)
             else:
@@ -127,7 +127,3 @@ def arrange_new_price(filename="test_us_price_1.xlsx"):
     wb.save(filename)
 
 
-converted_price = get_data("C:\\Users\\Виктория\\Downloads\\knigi-polnyy-prays.xlsx")
-create_table_head()
-create_new_price(converted_price=converted_price)
-arrange_new_price()

@@ -40,6 +40,8 @@ def contains_cls(name):
         return name[span[0]:span[1]]
     elif "начал" in name and "школ" in name:
         return "4"
+    elif "пропис" in name:
+        return "1"
     elif re.search(oge_pattern, name):
         return "огэ"
     elif re.search(ege_pattern, name):
@@ -84,4 +86,3 @@ def test(filename="C:\\Users\\Виктория\\Downloads\\knigi-polnyy-prays_3.
     df.to_excel("test_result.xls", index=False)
 
 
-# test()
