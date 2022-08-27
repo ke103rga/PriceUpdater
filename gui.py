@@ -4,17 +4,19 @@ from tkinter import messagebox
 from interservice_price_parser import parse_price
 from new_price_converter import classify_literature
 from xls_file_maker import create_table_head, create_new_price, arrange_new_price
+from price_sampler import sample_max_year_literature
 
 
 def make_new_price(files_data, filename, window, sale=17):
     try:
         new_price = parse_price(filename=files_data.get("interservis_price"), sale=sale)
         converted_price = classify_literature(new_price)
+        sampled_price = sample_max_year_literature(converted_price)
 
         result_file_path = f'{files_data["result_dir"]}/{filename.get()}.xlsx'
 
         create_table_head(result_file_path)
-        create_new_price(result_file_path, converted_price=converted_price, sale=sale)
+        create_new_price(result_file_path, converted_price=sampled_price, sale=sale)
         arrange_new_price(result_file_path)
 
         messagebox.showinfo("Готово!", "Файл успешно сохранен в указаннной вами папке.")

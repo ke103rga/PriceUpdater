@@ -79,7 +79,10 @@ def create_new_price(filename="test_us_price_1.xlsx", converted_price=None, sale
     page.append(headers)
 
     for cls in converted_price.keys():
-        page.append([f"{cls}", f"{cls} Класс"])
+        if cls.isdigit():
+            page.append([f"{cls}", f"{cls} Класс"])
+        else:
+            page.append([f"{cls}", f"{cls.upper()}"])
         for subject in converted_price[cls].keys():
             page.append([f"{cls}", f"{subject}"])
             rows = converted_price[cls][subject]
@@ -96,7 +99,7 @@ def arrange_new_price(filename="test_us_price_1.xlsx"):
     border = Border(left=Side(border_style="medium"), right=Side(border_style="medium"), top=Side(border_style="medium"),
                     bottom=Side(border_style="medium"), diagonal=Side(border_style="medium"))
 
-    table_len = len(page["A"]) - 9
+    table_len = len(page["A"])
     table_width = 8
     headers = ["0", "A", "B", "C", "D", "E", "F", "G", "H", "I"]
 
@@ -116,7 +119,7 @@ def arrange_new_price(filename="test_us_price_1.xlsx"):
 
     for index in range(10, table_len+1):
         if not page[f"C{index}"].value and not page[f"D{index}"].value and not page[f"E{index}"].value:
-            if "Класс" in page[f"B{index}"].value:
+            if "Класс" in page[f"B{index}"].value or page[f"B{index}"].value in ["ОГЭ", "ЕГЭ", "КОР"]:
                 arrange_row(index, "00FFFF00", bold=True)
             else:
                 arrange_row(index, "FF9C06", start_ind=2, bold=True)
