@@ -4,7 +4,7 @@ from templates import new_price_template
 
 
 def get_price(filename="C:\\Users\\Виктория\\Downloads\\testPrice.xlsx"):
-    price = pd.read_excel(filename, header=12)
+    price = pd.read_excel(filename, header=2)
     return price
 
 
@@ -21,7 +21,7 @@ def get_study_literature(price, sale=17):
                 # print(data["ISBN"])
                 formalized_data = formalize_data(data.to_dict(), cls, sale)
                 new_price[cls].append(formalized_data)
-
+    print(len(new_price))
     return new_price
 
 
@@ -77,7 +77,7 @@ def parse_price(filename=None, price=None, sale=17):
     return new_price
 
 
-def test(filename="C:\\Users\\Виктория\\Downloads\\knigi-polnyy-prays_3.xlsx"):
+def test(filename="C:\\Users\\Виктория\\Downloads\\knigi-polnyy-prays_7.xlsx"):
     prices = parse_price(filename)
     new_price = []
     for price in prices.values():
@@ -86,3 +86,4 @@ def test(filename="C:\\Users\\Виктория\\Downloads\\knigi-polnyy-prays_3.
     df.to_excel("test_result.xls", index=False)
 
 
+#test()
