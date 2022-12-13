@@ -10,6 +10,7 @@ def get_price(filename="C:\\Users\\Виктория\\Downloads\\testPrice.xlsx")
 
 def get_study_literature(price, sale=17):
     new_price = new_price_template.copy()
+    valid_classes = new_price.keys()
 
     for row in price.iterrows():
         data = row[1]
@@ -17,7 +18,7 @@ def get_study_literature(price, sale=17):
         if not pd.isnull(name):
             name = name.split("/")[0].lower()
             cls = contains_cls(name)
-            if cls and cls in new_price.keys():
+            if cls and cls in valid_classes:
                 # print(data["ISBN"])
                 formalized_data = formalize_data(data.to_dict(), cls, sale)
                 new_price[cls].append(formalized_data)
@@ -40,13 +41,14 @@ def contains_cls(name):
         return name[span[0]:span[1]]
     elif "начал" in name and "школ" in name:
         return "4"
-    elif "пропис" in name:
+    elif "пропис" in name and "горец" in name:
         return "1"
     elif re.search(oge_pattern, name):
         return "огэ"
     elif re.search(ege_pattern, name):
         return "егэ"
-    elif any([re.search(pattern, name) for pattern in correct_patterns]):
+    elif any([re.search(pattern, name) for pattern in correct_patterns])\
+            or ("интеллект" in name and "наруш" in name):
         return "кор"
     return None
 
